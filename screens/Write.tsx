@@ -32,6 +32,7 @@ const Write = () => {
         ))}
       </Emotions>
       <TextInput
+        // (android) returnKeyLabel
         returnKeyType='done'
         onSubmitEditing={onSubmit}
         onChangeText={onChangeText}
