@@ -6,7 +6,7 @@ import Write from './screens/Write';
 export type RootStackParamList = {
   Home: undefined;
   Write: undefined;
-}
+};
 
 const Tabs = createNativeStackNavigator<RootStackParamList>();
 
