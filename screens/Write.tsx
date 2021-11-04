@@ -1,11 +1,20 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import colors from '../colors';
+import { useDB } from '../context';
+import { RootStackParamList } from '../Navigator';
 
 const emotions = ['🤯', '🥲', '🤬', '🤗', '🥰', '😊', '🤩'];
 
-const Write = () => {
+type WriteNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+interface WriteProps {
+  navigation: WriteNavigationProp;
+}
+
+const Write = ({ navigation: { goBack } }: WriteProps) => {
+  const realm = useDB();
   const [selectedEmotion, setEmotion] = useState<string | null>(null);
   const [feelings, setFeelings] = useState<string>('');
 
@@ -16,6 +25,17 @@ const Write = () => {
     if (feelings === '' || selectedEmotion == null) {
       return Alert.alert('Please complete form.');
     }
+
+    realm &&
+      realm.write(() => {
+        realm.create('Feeling', {
+          _id: Date.now(),
+          emotion: selectedEmotion,
+          message: feelings,
+        });
+      });
+
+    goBack();
   };
 
   return (
@@ -32,7 +52,6 @@ const Write = () => {
         ))}
       </Emotions>
       <TextInput
-        // (android) returnKeyLabel
         returnKeyType='done'
         onSubmitEditing={onSubmit}
         onChangeText={onChangeText}
