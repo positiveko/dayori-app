@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "positive-dayori",
+    "slug": "positive-dayori",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "positive-dayori"
+}
